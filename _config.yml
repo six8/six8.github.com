@@ -1,0 +1,11 @@
+markdown: rdiscount
+auto: true
+permalink: pretty
+pygments:    true
+exclude:
+  - start.sh
+  - Rakefile
+  - pids
+  - stop.sh
+  - README.markdown
+  - LICENSE

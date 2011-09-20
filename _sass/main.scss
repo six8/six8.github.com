@@ -1,0 +1,264 @@
+$main: #8BB005;
+$text_color: #2D3032;
+$header_color: $text_color;
+$link_color: #DD5F18;
+$footer_bg: #404333;
+$footer_color: #F7F7F7;
+
+$body_bg: #F7F7F7;
+$header_bg: $body_bg;
+
+html {
+    
+}
+
+a {
+    color: $link_color;
+    &:hover { color: #FBA922; }
+    &:visited { color: $link_color; }
+}
+
+body {
+    text-align: center;
+    font-family: 'Helvetica Neue', Helvetica;
+    font-size: 1em;
+    color: $text_color;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: $body_bg;
+}
+
+#header {
+    font-family: 'Lato';
+    padding: 25px;
+    background: $header_bg;
+    margin-bottom: 45px;
+    color: $header_color;
+    
+    .inner {
+        text-align: left;
+        width: 725px;
+        margin: auto;
+    }
+    
+    ul {
+        float: right;
+        list-style-type: none;
+        
+        li {
+            float: right;
+            margin-left: 18px;
+            margin-top: 10px;
+            font-size: 23px;
+            font-weight: 300;
+            
+            a {
+                color: $header_color;
+                text-decoration: none;
+                
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }    
+        
+    }
+    
+    h1 {
+        font-size: 59px;
+        font-weight: bold;
+        
+        a {
+            text-decoration: none;
+            color: $header_color;
+        }
+    }
+    
+    h2 {
+        font-size: 23px;
+        font-weight: 300;
+        img {
+            margin-left: 3px;
+        }
+    }
+}
+
+#content {
+    .inner {
+        text-align: left;
+        width: 725px;
+        margin: auto;
+    }
+}
+    
+.post {
+    margin-bottom: 55px;
+    
+    h3 {
+        font-size: 29px;
+        font-family: 'Lato';
+        font-weight: normal;
+        margin-bottom: 25px;
+    }
+    
+    h3 a {
+        text-decoration: none;
+    }
+    h3 a:hover {
+        text-decoration: underline;
+    }
+    
+    .body {
+        font-size: 17px;
+    }
+    
+    .body p {
+        margin-bottom: 1em;
+    }
+    
+    ul {
+        margin-bottom: 1em;
+    }
+    
+    ul li {
+        margin-bottom: 0.5em;
+    }
+    
+    .meta {
+        margin-top: 25px;
+        border-top: 3px double #ddd;
+        padding-top: 25px;
+        color: #999;
+    }
+}
+
+#footer {
+    font-family: 'Lato';
+    background: $footer_bg;
+    padding: 25px;
+    color: $footer_color;
+    
+    .inner {
+        text-align: left;
+        width: 725px;
+        margin: auto;
+    }
+    
+    h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        font-weight: 300;
+        a {
+            text-decoration: none;
+            color: $footer_color;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    table {
+        font-weight: 300;
+    }
+    
+    table tr td {
+        padding-bottom: 3px;
+        padding-right: 15px;
+    }
+    
+    table tr td a {
+        text-decoration: none;
+    }
+    
+    table tr td a:hover {
+        text-decoration: underline;
+    }
+    
+    table tr td.date {
+        text-align: right;
+    }
+    
+    .archives {
+        float: left;
+        margin-right: 25px;
+    }
+    
+    .about {
+        float: left;
+        
+        img {
+            float: left;
+        }
+        
+        div {
+            padding-left: 140px;
+            width: 140px;
+        }
+    }
+}
+
+.my_pic {
+    float: right;
+}
+
+.about_head {
+    width: 500px;
+    margin-bottom: 45px;
+}
+
+.projects_container {
+    border-top: #ddd double 3px;
+    border-bottom: #ddd double 3px;
+    padding: 35px 0 0 0;
+}
+
+table.projects {
+    td {
+        padding-bottom: 35px;
+    }
+    
+    td.img {
+        text-align: center;
+        vertical-align: middle;
+    }
+    td.desc {
+        padding-left: 45px;
+    }
+}
+
+.bubble {
+    color: $footer_bg;
+    font-size: 0.9em;
+    background: #FBA922;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    
+    .tip {
+        background: url(/images/triangle.png) no-repeat 0 0;
+        width: 10px;
+        height: 11px;
+        position: absolute;
+        top: 19px;
+        left: -10px;
+    }
+    
+    a {
+        text-decoration: none;
+        color: $body_bg;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+
+#disqus_thread {
+    margin-top: 45px;
+    
+    h3 {
+        font-size: 19px;
+    }
+}
