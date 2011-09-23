@@ -2,6 +2,7 @@ markdown: rdiscount
 auto: true
 permalink: pretty
 pygments:    true
+url: http://devdetails.com
 exclude:
   - start.sh
   - Rakefile

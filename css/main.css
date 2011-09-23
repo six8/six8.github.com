@@ -61,7 +61,7 @@ body {
     font-size: 29px;
     font-family: 'Lato';
     font-weight: normal;
-    margin-bottom: 25px; }
+    margin-bottom: 0.2em; }
   .post h3 a {
     text-decoration: none; }
   .post h3 a:hover {
@@ -75,10 +75,14 @@ body {
   .post ul li {
     margin-bottom: 0.5em; }
   .post .meta {
-    margin-top: 25px;
-    border-top: 3px double #ddd;
-    padding-top: 25px;
+    margin-top: 1em;
+    border-top: 2px solid #ddd;
+    padding-top: 1em;
     color: #999; }
+  .post .date {
+    font-size: 90%;
+    color: #999;
+    margin-bottom: 1em; }
 
 #footer {
   font-family: 'Lato';

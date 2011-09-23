@@ -1,5 +1,6 @@
 --- 
 layout: post
+comments: true
 title: "Install PIL in a virtualenv on Mac OSX Lion"
 date: Tue Sep 20 02:19:15 -0500 2011
 ---

@@ -3,3 +3,4 @@ Rakefile
 README.markdown
 .sass-cache
 _site
+pids
