@@ -3,6 +3,7 @@ auto: true
 permalink: pretty
 pygments:    true
 url: http://devdetails.com
+name: Dev Details
 exclude:
   - start.sh
   - Rakefile
