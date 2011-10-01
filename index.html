@@ -14,6 +14,9 @@ title: Dev Details - Cause dev is in the details
         <div class="meta">
             <div><g:plusone size="small" href="{{ site.url }}{{ post.url }}"></g:plusone></div>
             <div class="fb-like" data-href="{{ site.url }}{{ post.url }}" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
+            {% if post.comments %}
+            <div><a href="{{ post.url }}#comments">Comments</a></div>
+            {% endif %} 
         </div>
     </div>
 {% endfor %}
