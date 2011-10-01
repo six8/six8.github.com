@@ -1,5 +1,6 @@
 --- 
 layout: post
+comments: true
 title: "Fix for gray overlay on touch with iOS and Sencha Touch"
 date: Sat Oct 01 03:59:15 -0500 2011
 ---
