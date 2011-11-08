@@ -1,5 +1,6 @@
 --- 
 layout: post
+comments: true
 title: "Clom: Python command line the easy way"
 date: Mon Nov 07 23:58:43 -0600 2011
 ---
