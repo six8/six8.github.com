@@ -15,7 +15,11 @@
   <link href="/css/main.css" media="screen" rel="stylesheet" type="text/css" /> 
   <link href="/css/syntax.css" media="screen" rel="stylesheet" type="text/css" /> 
   <link rel="alternate" type="application/rss+xml" href="http://feeds.feedburner.com/devdetails" title="RSS feed">
+  {% if page.url == '/index.html' %}
+  <link rel="canonical" href="{{ site.url }}"/>
+  {% else %}
   <link rel="canonical" href="{{ site.url }}{{ page.url }}"/>
+  {% endif %}
 </head> 
  
     <body> 
