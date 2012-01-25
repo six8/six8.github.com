@@ -57,15 +57,29 @@ body {
 
 .post {
   margin-bottom: 5em; }
-  .post h3 {
-    font-size: 1.5em;
+  .post h1, .post h2, .post h3, .post h4, .post h5 {
     font-family: 'Lato';
-    font-weight: normal;
+    font-weight: bold;
     margin-bottom: 0.2em; }
-  .post h3 a {
-    text-decoration: none; }
-  .post h3 a:hover {
-    text-decoration: underline; }
+    .post h1 a, .post h2 a, .post h3 a, .post h4 a, .post h5 a {
+      text-decoration: none; }
+      .post h1 a:hover, .post h2 a:hover, .post h3 a:hover, .post h4 a:hover, .post h5 a:hover {
+        text-decoration: underline; }
+  .post h1 {
+    font-size: 1.5em;
+    color: #333333; }
+  .post h2 {
+    font-size: 1.35em;
+    color: #595959; }
+  .post h3 {
+    font-size: 1.2em;
+    color: gray; }
+  .post h4 {
+    font-size: 1.05em;
+    color: #a6a6a6; }
+  .post h5 {
+    font-size: 1.0em;
+    color: #bfbfbf; }
   .post .body {
     font-size: 1em;
     line-height: 1.5; }
