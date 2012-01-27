@@ -21,7 +21,7 @@ For those new to Python, don't worry, you don't need to know it. You can simply 
 
 This installs the `cipr` command line utility. All your interaction with Cipr is through this command. You can get a list of available commands with:
 
-    cipr help
+    cipr -h
     
 Your First Project
 ------------------
