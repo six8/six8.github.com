@@ -456,7 +456,7 @@ we'll create a mini-particle engine that will use &lt;a href="http://github.com/
 &lt;p&gt;The &lt;code&gt;click&lt;/code&gt; event ends up being attached to &lt;code&gt;document&lt;/code&gt; when it's a touch device. I'm not sure what case prompted Sencha to do this, but I can't see any reason for it being here especially since it's the cause of this issue.&lt;/p&gt;
 &lt;p&gt;So the fix is simple. Instead of modifying Sencha's code, I just put this at the top of my Javascript after loading Sencha's Javascript:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// Prevent sencha from attaching to the &amp;#39;click&amp;#39; event which&lt;/span&gt;
-&lt;span class="c1"&gt;// will make a gray overlay appear when you touch the each of the screen.&lt;/span&gt;
+&lt;span class="c1"&gt;// will make a gray overlay appear when you touch the edge of the screen.&lt;/span&gt;
 &lt;span class="nx"&gt;Ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;gesture&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Manager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;defaultPreventedMouseEvents&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[];&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 

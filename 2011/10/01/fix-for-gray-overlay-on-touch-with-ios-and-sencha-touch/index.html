@@ -77,7 +77,7 @@
 <p>The <code>click</code> event ends up being attached to <code>document</code> when it's a touch device. I'm not sure what case prompted Sencha to do this, but I can't see any reason for it being here especially since it's the cause of this issue.</p>
 <p>So the fix is simple. Instead of modifying Sencha's code, I just put this at the top of my Javascript after loading Sencha's Javascript:</p>
 <div class="highlight"><pre><span class="c1">// Prevent sencha from attaching to the &#39;click&#39; event which</span>
-<span class="c1">// will make a gray overlay appear when you touch the each of the screen.</span>
+<span class="c1">// will make a gray overlay appear when you touch the edge of the screen.</span>
 <span class="nx">Ext</span><span class="p">.</span><span class="nx">gesture</span><span class="p">.</span><span class="nx">Manager</span><span class="p">.</span><span class="nx">defaultPreventedMouseEvents</span> <span class="o">=</span> <span class="p">[];</span>
 </pre></div>
 
