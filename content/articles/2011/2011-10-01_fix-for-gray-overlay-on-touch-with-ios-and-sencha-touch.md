@@ -52,7 +52,7 @@ So the fix is simple. Instead of modifying Sencha's code, I just put this at the
 
     ::::js
     // Prevent sencha from attaching to the 'click' event which
-    // will make a gray overlay appear when you touch the each of the screen.
+    // will make a gray overlay appear when you touch the edge of the screen.
     Ext.gesture.Manager.defaultPreventedMouseEvents = [];
 
 Note that these issues were reproduced with Sencha Touch 1.1.0 and iOS 4.3 but may not be limited to these versions.
