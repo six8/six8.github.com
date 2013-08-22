@@ -22,6 +22,8 @@ LINKS =  []
 
 SOCIAL = []
 
+GOOGLE_ANALYTICS = 'UA-27029635-1'
+
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
