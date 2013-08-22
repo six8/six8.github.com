@@ -1,11 +1,14 @@
+// Pallette http://www.colourlovers.com/palette/625987/dont_you_go_down
 @red:         #ff0000;
 @black:       #000000;
 @white:       #ffffff;
 @light-grey:  #eeeeee;
 @med-grey:    #999999;
 @dark-grey:   #4d4d4d;
-@blue:        #0e94ec;
-@highlight:   #0ee7ec;
+@blue:        #d3643b;
+@link:        @blue;
+@highlight:   #94c7b6;
+@visited:   #ab5130;
 
 @accent:      @blue;
 
@@ -28,19 +31,22 @@ body {
   padding: 0;
   background-color: @white;
   color: @dark-grey;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 300;
+  font-family: 'Lora', sans-serif;
+  font-weight: 400;
   font-size: 13px;
   line-height: 1.2;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
 a {
-  color: @blue;
+  color: @link;
   text-decoration: none;
   
+  &:visited {
+    color: @visited;
+  }
   &:link {
-    color: @blue;
+    color: @link;
   }
   &:hover {
     color: @highlight;
@@ -90,10 +96,19 @@ a {
 
 .logo {
   font-family: 'Anonymous Pro', monospace, sans-serif;  
-  text-align: center;
-  background: white;
+  text-align: center;  
   line-height: 1;
-  border: 0.25em solid black;
+
+  @pri: #d6e1c7;
+  @sec: #94c7b6;
+  @bac: #403b33;
+
+  background: @bac;
+  border-bottom: 0.25em solid @sec;
+  border-left: 0.25em solid @sec;
+  border-right: 0.25em solid @pri;
+  border-top: 0.25em solid @pri;
+
   position: relative;
   font-weight: 400;
   padding: 0.25em;
@@ -106,12 +121,12 @@ a {
   .logo-dev {    
     display: block;
     font-size: 230%;    
-    color: @blue;
+    color: @pri;
   }
 
   .logo-details {    
     display: block;
-    color: black;
+    color: @sec;
   }
 
   // Desktop
@@ -268,7 +283,7 @@ section.posts {
   }
 
   pre,code {
-    background-color: #fbf7ea;
+    background-color: #edebe6;
     font-family: 'Anonymous Pro', monospace, sans-serif;
     color: @black;    
   }
