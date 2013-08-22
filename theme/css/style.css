@@ -12,25 +12,28 @@ body {
   padding: 0;
   background-color: #ffffff;
   color: #4d4d4d;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 300;
+  font-family: 'Lora', sans-serif;
+  font-weight: 400;
   font-size: 13px;
   line-height: 1.2;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 a {
-  color: #0e94ec;
+  color: #d3643b;
   text-decoration: none;
 }
+a:visited {
+  color: #ab5130;
+}
 a:link {
-  color: #0e94ec;
+  color: #d3643b;
 }
 a:hover {
-  color: #0ee7ec;
+  color: #94c7b6;
   outline: 0;
 }
 a:active {
-  color: #0ee7ec;
+  color: #94c7b6;
   outline: 0;
 }
 a:focus {
@@ -45,9 +48,12 @@ a:focus {
 .logo {
   font-family: 'Anonymous Pro', monospace, sans-serif;
   text-align: center;
-  background: white;
   line-height: 1;
-  border: 0.25em solid black;
+  background: #403b33;
+  border-bottom: 0.25em solid #94c7b6;
+  border-left: 0.25em solid #94c7b6;
+  border-right: 0.25em solid #d6e1c7;
+  border-top: 0.25em solid #d6e1c7;
   position: relative;
   font-weight: 400;
   padding: 0.25em;
@@ -63,11 +69,11 @@ a:focus {
 .logo .logo-dev {
   display: block;
   font-size: 230%;
-  color: #0e94ec;
+  color: #d6e1c7;
 }
 .logo .logo-details {
   display: block;
-  color: black;
+  color: #94c7b6;
 }
 @media only screen and (max-width: 500px) {
   .logo {
@@ -199,7 +205,7 @@ section.posts blockquote {
   margin: 0;
   padding: 0 0 0 20px;
   display: inline-block;
-  border-left: 10px solid #0e94ec;
+  border-left: 10px solid #d3643b;
   max-width: 500px;
 }
 section.posts blockquote p {
@@ -207,7 +213,7 @@ section.posts blockquote p {
 }
 section.posts pre,
 section.posts code {
-  background-color: #fbf7ea;
+  background-color: #edebe6;
   font-family: 'Anonymous Pro', monospace, sans-serif;
   color: #000000;
 }
@@ -279,7 +285,7 @@ section.posts article .article_meta a {
   text-decoration: none;
 }
 section.posts article .article_meta a:hover {
-  color: #0ee7ec;
+  color: #94c7b6;
 }
 section.posts article footer {
   margin-top: 40px;
