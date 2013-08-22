@@ -10,4 +10,11 @@ Install
 Build
 -----
 
-    make html    
+    make html
+
+Deploy on Github Pages
+----------------------
+
+*Note*: This destroys the master branch and overwrites it with the content from output:
+
+    make github
