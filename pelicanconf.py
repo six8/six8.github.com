@@ -69,7 +69,7 @@ FEED_DOMAIN = SITEURL
 FEED_ATOM = 'feeds/atom.xml'
 FEED_RSS = 'feeds/rss.xml'
 
-FILES_TO_COPY = []
+FILES_TO_COPY = [('../CNAME', 'CNAME')]
 
 for (dirpath, dirnames, filenames) in walk('content/raw'):
     for filename in filenames:
