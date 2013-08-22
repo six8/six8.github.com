@@ -16,3 +16,4 @@ ssh==1.7.14
 webassets==0.8
 wsgiref==0.1.2
 yuicompressor==2.4.7
+ghp-import==0.3.0
