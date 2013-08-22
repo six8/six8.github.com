@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link href='http://fonts.googleapis.com/css?family=Nunito:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="http://devdetails.com/theme/css/style.css?4d00dfc5">
+  
+    <link href="http://devdetails.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Full Atom Feed" />
+        <link href="http://devdetails.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Atom Feed" />
+      <link href="http://devdetails.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Dev Details RSS Feed" />
+      <link href="http://devdetails.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Categories Atom Feed" />
+        
+      <title>Dev Details</title>    
+  </head>
+<body>
+  <div class="logo">
+    <a href="http://devdetails.com"><span class="logo-dev">Dev</span><span class="logo-details">Details</span></a>
+  </div>
+
+  <section class="posts">
+    <article>
+    <h1 class="title">
+      <a href="http://devdetails.com/2011/11/07/clom-python-command-line-the-easy-way/" rel="bookmark"
+        title="Permalink to Clom: Python command line the easy way">Clom: Python command line the easy way</a>
+    </h1>
+
+    <div class="article_meta">
+      <span class="author"><a href="http://devdetails.com/author/mike-thornton/">Mike Thornton</a></span> 
+
+            in
+      
+      
+        <a href="http://devdetails.com/category/articles/">Articles</a>,
+          <a href="http://devdetails.com/tag/python/">python</a>,
+          <a href="http://devdetails.com/tag/clom/">clom</a>
+      on Nov 07, 2011
+    </div>
+
+    <h2>Now Just WTF is Clom?</h2>
+<p>Clom is a Python Command Line Object Mapper. I wrote <a href="http://github.com/six8/python-clom">Clom</a> in order to reduce the amount of repetitive coding needed to write apps that routinely deal with the command line. <a href="http://fabfile.org/">Fabric</a> scripts in particular involve string manipulation to write commands which can lead to error prone, unescaped, and unsafe commands. Instead of working directly with strings and having to worry about escaping arguments yourself (or completely forgetting to), Clom allows you to work with an object interface to write commands more safely. Just as SQL ORMs allow you to write re-usable and safer SQL, Clom allows you to write re-usable and safer command line code.</p>
+<h2>Using Clom to Manage VirtualBox</h2>
+<p>To introduce you to Clom and how it's useful, let's take a look at how we could use Clom to manage some <a href="http://www.virtualbox.org/">VirtualBoxes</a>.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">clom</span> <span class="kn">import</span> <span class="n">clom</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">runningvms</span><span class="p">()</span>
+<span class="s">&#39;VBoxManage list runningvms&#39;</span>
+</pre></div>
+
+
+<p>Working with Clom starts with the clom object. Commands are accessed by attribute or item lookup. Each command can have sub-commands also accessed by attribute or item lookup. Calling a command doesn't execute it. A command can be stringified in order to be passed to a <a href="http://docs.python.org/library/subprocess.html">subprocess</a> function, Popen, or even <a href="http://fabfile.org/">Fabric</a>. Clom also offers a shortcut for easily executing commands in a shell.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">runningvms</span><span class="o">.</span><span class="n">shell</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="nb">list</span> <span class="n">runningvms</span>
+<span class="o">&lt;</span><span class="n">CommandResult</span> <span class="n">return_code</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="mi">0</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="mi">0</span> <span class="nb">bytes</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<h3>Shelling Out Commands</h3>
+<p>The Clom <a href="http://clom.readthedocs.org/en/latest/api.html#shell">shell interface</a> offers many convenient ways to access the return result of a shell command.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">vms</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="nb">list</span> <span class="n">vms</span>
+<span class="p">[</span><span class="s">&#39;&quot;Windows Base&quot; {949ec0af-92d0-4140-8a6c-36301ca6f695}&#39;</span><span class="p">,</span> <span class="s">&#39;&quot;Dev_1320289635&quot; {0a4df13c-e9f8-42c1-b09b-1f4619cca34d}&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">vms</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="nb">list</span> <span class="n">vms</span>
+<span class="s">&#39;&quot;Windows Base&quot; {949ec0af-92d0-4140-8a6c-36301ca6f695}&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">vms</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="nb">list</span> <span class="n">vms</span>
+<span class="s">&#39;&quot;Dev_1320289635&quot; {0a4df13c-e9f8-42c1-b09b-1f4619cca34d}&#39;</span>
+</pre></div>
+
+
+<p>You can also iterate over the lines of the command's results.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">vms</span><span class="o">.</span><span class="n">shell</span><span class="p">():</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">line</span>
+<span class="o">...</span> 
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="nb">list</span> <span class="n">vms</span>
+<span class="s">&quot;Windows Base&quot;</span> <span class="p">{</span><span class="mi">949</span><span class="n">ec0af</span><span class="o">-</span><span class="mi">92</span><span class="n">d0</span><span class="o">-</span><span class="mi">4140</span><span class="o">-</span><span class="mi">8</span><span class="n">a6c</span><span class="o">-</span><span class="mi">36301</span><span class="n">ca6f695</span><span class="p">}</span>
+<span class="s">&quot;Dev_1320289635&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">a4df13c</span><span class="o">-</span><span class="n">e9f8</span><span class="o">-</span><span class="mi">42</span><span class="n">c1</span><span class="o">-</span><span class="n">b09b</span><span class="o">-</span><span class="mi">1</span><span class="n">f4619cca34d</span><span class="p">}</span>
+</pre></div>
+
+
+<p>Shell execution returns <a href="http://clom.readthedocs.org/en/latest/api.html#clom.shell.CommandResult">CommandResult</a> which allows access to stdout, stderr, and the return code of the command.</p>
+<h3>Augment with Arguments</h3>
+<p>Commands aren't very interesting without arguments, so let's add some.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">showvminfo</span><span class="p">(</span><span class="s">&#39;Windows Base&#39;</span><span class="p">,</span> <span class="n">machinereadable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">all</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="n">showvminfo</span> <span class="o">--</span><span class="n">machinereadable</span> <span class="o">--</span><span class="n">details</span> <span class="s">&#39;Windows Base&#39;</span>
+<span class="p">[</span><span class="s">&#39;name=&quot;Windows Base&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;ostype=&quot;WindowsXP&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;UUID=&quot;949ec0af-92d0-4140-8a6c-36301ca6f695&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;CfgFile=&quot;VirtualBox/Machines/Windows Base/Windows Base.xml&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;SnapFldr=&quot;VirtualBox/Machines/Windows Base/Snapshots&quot;&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>There's several ways to add arguments and options. When arguments or option values are used, they're properly escaped if needed.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Test VM&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">createvm</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">register</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ostype</span><span class="o">=</span><span class="s">&#39;Linux&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="n">createvm</span> <span class="o">--</span><span class="n">ostype</span> <span class="n">Linux</span> <span class="o">--</span><span class="n">register</span> <span class="o">--</span><span class="n">name</span> <span class="s">&#39;Test VM&#39;</span>
+<span class="p">[</span><span class="s">&quot;Virtual machine &#39;Test VM&#39; is created and registered.&quot;</span><span class="p">,</span> <span class="s">&#39;UUID: e7b73b54-7a94-4aaa-9f5f-335140a1703a&#39;</span><span class="p">,</span> <span class="s">&quot;Settings file: &#39;VirtualBox VMs/Test VM/Test VM.vbox&#39;&quot;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>Options can be specified by calling a command with keyword arguments as above or by using <code>with_opts()</code>. Options and arguments have a catch however. Options are always listed before arguments. VBoxManage expects the VM's name as the first argument, followed by options. </p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">modifyvm</span><span class="p">(</span><span class="s">&#39;Test VM&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">with_opts</span><span class="p">(</span><span class="s">&#39;--vrde&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">usb</span><span class="o">=</span><span class="s">&#39;on&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage modifyvm --vrde on --usb on --memory 256 &#39;</span><span class="n">Test</span> <span class="n">VM</span><span class="s">&#39;&#39;</span>
+</pre></div>
+
+
+<p>Unfortunately, as expected, the code above puts the VM name after the options. We can get around this by passing the VM name as the first option. <code>with_opts()</code> honors positional options followed by unspecified order keyword options.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">modifyvm</span><span class="o">.</span><span class="n">with_opts</span><span class="p">(</span><span class="s">&#39;Test VM&#39;</span><span class="p">,</span> <span class="s">&#39;--vrde&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">usb</span><span class="o">=</span><span class="s">&#39;on&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage modifyvm &#39;</span><span class="n">Test</span> <span class="n">VM</span><span class="s">&#39; --vrde on --usb on --memory 256&#39;</span>
+</pre></div>
+
+
+<p>Arguments are straight forward. They're just added to the end of the command in the order you provide.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">registervm</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="s">&#39;/path/to/vm&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage registervm /path/to/vm&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">setproperty</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="s">&#39;machinefolder&#39;</span><span class="p">,</span> <span class="s">&#39;default&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage setproperty machinefolder default&#39;</span>
+</pre></div>
+
+
+<p>Calling a command is simply an alias to <code>with_opts(**kwargs).with_args(*args)</code>. The above could also be written as a function call.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">registervm</span><span class="p">(</span><span class="s">&#39;/path/to/vm&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage registervm /path/to/vm&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span><span class="o">.</span><span class="n">setproperty</span><span class="p">(</span><span class="s">&#39;machinefolder&#39;</span><span class="p">,</span> <span class="s">&#39;default&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage setproperty machinefolder default&#39;</span>
+</pre></div>
+
+
+<h3>Reusing Clom Objects</h3>
+<p>Part of the power of Clom is that each command object is re-usable. This allows you to chain and combine commands or use them many times for batch commands.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">vbox</span> <span class="o">=</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vbox</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">runningvms</span>
+<span class="s">&#39;VBoxManage list runningvms&#39;</span>
+</pre></div>
+
+
+<p>Sub-commands can be re-used as well.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">vbox</span><span class="o">.</span><span class="n">list</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span><span class="n">runningvms</span>
+<span class="s">&#39;VBoxManage list runningvms&#39;</span>    
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span><span class="n">vms</span>
+<span class="s">&#39;VBoxManage list vms&#39;</span>   
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span><span class="n">dvds</span>
+<span class="s">&#39;VBoxManage list dvds&#39;</span>
+</pre></div>
+
+
+<p>You can set default options and arguments.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">create_linux</span> <span class="o">=</span> <span class="n">vbox</span><span class="o">.</span><span class="n">createvm</span><span class="o">.</span><span class="n">with_opts</span><span class="p">(</span><span class="n">ostype</span><span class="o">=</span><span class="s">&#39;Linux&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">create_linux</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;My Box&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage createvm --ostype Linux --name &#39;</span><span class="n">My</span> <span class="n">Box</span><span class="s">&#39;&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">create_linux</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Their Box&#39;</span><span class="p">)</span>
+<span class="s">&#39;VBoxManage createvm --ostype Linux --name &#39;</span><span class="n">Their</span> <span class="n">Box</span><span class="s">&#39;&#39;</span>
+</pre></div>
+
+
+<h3>Background Noise</h3>
+<p>Some commands need to be forked and ran in the background.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxHeadless</span><span class="o">.</span><span class="n">with_opts</span><span class="p">(</span><span class="n">startvm</span><span class="o">=</span><span class="s">&#39;Test VM&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">background</span><span class="p">()</span><span class="o">.</span><span class="n">shell</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span> <span class="p">(</span><span class="n">capture</span> <span class="n">off</span><span class="p">):</span> <span class="n">nohup</span> <span class="n">VBoxHeadless</span> <span class="o">--</span><span class="n">startvm</span> <span class="s">&#39;Test VM&#39;</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span>
+<span class="o">&lt;</span><span class="n">CommandResult</span> <span class="n">return_code</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="mi">0</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="mi">0</span> <span class="nb">bytes</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vbox</span><span class="o">.</span><span class="n">controlvm</span><span class="o">.</span><span class="n">with_opts</span><span class="p">(</span><span class="s">&#39;Test VM&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="s">&#39;poweroff&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shell</span><span class="p">()</span>
+<span class="n">INFO</span><span class="p">:</span><span class="n">clom</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span><span class="n">Executing</span> <span class="n">command</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="n">controlvm</span> <span class="s">&#39;Test VM&#39;</span> <span class="n">poweroff</span>
+</pre></div>
+
+
+<h3>Shortcuts</h3>
+<p>Clom has shortcuts for most POSIX operations including:</p>
+<ul>
+<li><code>with_env</code> - Run the operation with environmental variables</li>
+<li><code>hide_output</code> - Redirect a command's file descriptors to /dev/null</li>
+<li><code>output_to_file</code> - Replace a file's contents with this command's output</li>
+<li><code>append_to_file</code> - Append this command's output to a file</li>
+<li><code>pipe_to</code> - Pipe this command to another</li>
+</ul>
+<p>See the <a href="http://clom.readthedocs.org/en/latest/api.html">API docs</a> for details.</p>
+<h3>Fabric</h3>
+<p>Clom's original inspiration came from doing lots of automation with <a href="http://fabfile.org/">Fabric</a>.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">local</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">vbox</span> <span class="o">=</span> <span class="n">clom</span><span class="o">.</span><span class="n">VBoxManage</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">local</span><span class="p">(</span><span class="n">vbox</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">vms</span><span class="p">)</span>
+<span class="p">[</span><span class="n">localhost</span><span class="p">]</span> <span class="n">local</span><span class="p">:</span> <span class="n">VBoxManage</span> <span class="nb">list</span> <span class="n">vms</span>
+</pre></div>
+
+
+<p>This of course means you can use Clom with Fabric tasks, including remote ones.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">vmstart</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">...</span> <span class="n">run</span><span class="p">(</span><span class="n">vbox</span><span class="o">.</span><span class="n">startvm</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+
+
+<p>Clom even understands how to create Fabric commands.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">fab</span><span class="o">.</span><span class="n">vmstart</span><span class="p">(</span><span class="s">&#39;dev&#39;</span><span class="p">)</span>
+<span class="s">&#39;fab vmstart:dev&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clom</span><span class="o">.</span><span class="n">fab</span><span class="o">.</span><span class="n">vmstart</span><span class="p">(</span><span class="s">&#39;dev&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">vmstartservice</span><span class="p">(</span><span class="s">&#39;dev&#39;</span><span class="p">,</span> <span class="s">&#39;nginx&#39;</span><span class="p">,</span> <span class="s">&#39;flask&#39;</span><span class="p">)</span>
+<span class="s">&#39;fab vmstart:dev vmstartservice:dev,nginx,flask&#39;</span>
+</pre></div>
+
+
+<h2>That's It</h2>
+<p>I hope you've found this introduction to Clom useful. Check out <a href="http://clom.readthedocs.org/en/latest/index.html">Clom's Documentation</a> for other ways to use Clom and fork <a href="http://github.com/six8/python-clom">Clom on Github</a>.</p>
+
+    <footer>
+    <a href="http://devdetails.com">&larr; Further Reading</a>
+    </footer>
+  </article>
+  </section>
+
+  <div class="footer">
+  <div class="footer-inner">
+    <div class="copyright">
+      &copy; 2013 Dev Details
+    </div>
+    <ul class="nav">
+      <li><a href="http://devdetails.com">Home</a></li>
+      <li><a href="http://devdetails.com/archives/">More To Read</a></li>
+      <li><a href="http://devdetails.com/about/">About</a></li>
+    </li>
+  </div>
+</div>  </body>
+</html>

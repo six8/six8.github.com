@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link href='http://fonts.googleapis.com/css?family=Nunito:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="http://devdetails.com/theme/css/style.css?4d00dfc5">
+  
+    <link href="http://devdetails.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Full Atom Feed" />
+        <link href="http://devdetails.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Atom Feed" />
+      <link href="http://devdetails.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Dev Details RSS Feed" />
+      <link href="http://devdetails.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Categories Atom Feed" />
+        
+      <title>Dev Details</title>    
+  </head>
+<body>
+  <div class="logo">
+    <a href="http://devdetails.com"><span class="logo-dev">Dev</span><span class="logo-details">Details</span></a>
+  </div>
+
+  <section class="posts">
+    <article>
+    <h1 class="title">
+      <a href="http://devdetails.com/2012/01/24/getting-started-with-cipr/" rel="bookmark"
+        title="Permalink to Getting Started with Cipr">Getting Started with Cipr</a>
+    </h1>
+
+    <div class="article_meta">
+      <span class="author"><a href="http://devdetails.com/author/mike-thornton/">Mike Thornton</a></span> 
+
+            in
+      
+      
+        <a href="http://devdetails.com/category/articles/">Articles</a>,
+          <a href="http://devdetails.com/tag/corona-sdk/">corona-sdk</a>
+      on Jan 24, 2012
+    </div>
+
+    <h2>Now Just WTF is Cipr?</h2>
+<p><a href="http://github.com/six8/corona-cipr">Cipr</a> (pronounced "sipper") is part package manager, part development framework for <a href="http://www.anscamobile.com/corona/">Corona SDK</a>. Much like Python's <a href="http://pypi.python.org/pypi/pip">pip</a>, Cipr makes it easier to share packages and integrate them into Corona apps. The Goal for Cipr is that there's a generous amount of third-party, best-of-breed packages available for use in Corona apps. This will help new developers get started developing apps sooner and reduce the re-inventing of the wheel for every app.</p>
+<h2>Installing Cipr</h2>
+<p>Cipr is developed with <a href="http://python.org/">Python</a> and currently only supports Mac OSX. Installing is simple on Macs because it comes with Python installed. If you're familiar with Python you can install Cipr with <a href="http://pypi.python.org/pypi/pip">pip</a> or <a href="http://pypi.python.org/pypi/setuptools">easy_install</a> either globally or, as preferred, in a <a href="http://pypi.python.org/pypi/virtualenv">virtualenv</a>. </p>
+<p>For those new to Python, don't worry, you don't need to know it. You can simply install Cipr with this command on the terminal:</p>
+<div class="highlight"><pre>sudo easy_install cipr
+</pre></div>
+
+
+<p>This installs the <code>cipr</code> command line utility. All your interaction with Cipr is through this command. You can get a list of available commands with:</p>
+<div class="highlight"><pre>cipr -h
+</pre></div>
+
+
+<h2>Your First Project</h2>
+<p>Cipr considers each app a Project. Cipr can be used on an existing project, but for this tutorial let's create an empty project:</p>
+<div class="highlight"><pre>mkdir /tmp/hellocipr
+<span class="nb">cd</span> /tmp/hellocipr
+cipr init
+</pre></div>
+
+
+<p><code>cipr init</code> initializes the current directory as a Cipr project. It will copy in the default Cipr skeleton files which includes a basic <code>build.settings</code>, <code>config.lua</code>, and <code>main.lua</code>. These are some of the files every Corona project has. <code>cipr init</code> also adds <code>cipr.lua</code>. This is the basic development package loader for Cipr. It should not be modified as Cipr will overwrite it with the production version during build.</p>
+<p>This project will run at this point, but won't do anything useful. Cipr isn't entirely useful on it's own, so lets install a package:</p>
+<div class="highlight"><pre>cipr install git://github.com/six8/cipr.logging.git
+</pre></div>
+
+
+<p>As you can see, most Cipr packages are git repositories starting with <code>git://</code>. You can install packages from a directory as well, but this is generally only needed for package developers.</p>
+<p>See what packages are now installed:</p>
+<div class="highlight"><pre>cipr packages -l
+</pre></div>
+
+
+<p>You should see something like this:</p>
+<div class="highlight"><pre><span class="o">-</span> <span class="n">cipr</span><span class="p">.</span><span class="n">logging</span>
+  <span class="o">-</span> <span class="n">directory</span><span class="o">:</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">hellocipr</span><span class="o">/</span><span class="p">.</span><span class="n">cipr</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">cipr</span><span class="p">.</span><span class="n">logging</span>
+  <span class="o">-</span> <span class="n">source</span><span class="o">:</span> <span class="n">git</span><span class="o">:</span><span class="c1">//github.com/six8/cipr.logging.git</span>
+</pre></div>
+
+
+<p>Now lets try out our new package. Open up <code>main.lua</code> in your favorite editor and make it look like this:</p>
+<div class="highlight"><pre><span class="c1">-- Initialize cipr</span>
+<span class="kd">local</span> <span class="n">cipr</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;</span><span class="s">cipr&#39;</span>
+<span class="c1">-- Use cipr to import the logging package</span>
+<span class="kd">local</span> <span class="n">logging</span> <span class="o">=</span> <span class="n">cipr</span><span class="p">.</span><span class="n">import</span> <span class="s1">&#39;</span><span class="s">cipr.logging&#39;</span>
+<span class="c1">-- Create a logger for this file (... is automatically replaced with this file name)</span>
+<span class="kd">local</span> <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">log</span><span class="p">:</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">log</span><span class="p">:</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">Started&#39;</span><span class="p">)</span>
+<span class="n">log</span><span class="p">:</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">the value of `x` is %s&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Now we're ready to run this with Corona:</p>
+<div class="highlight"><pre>cipr run
+</pre></div>
+
+
+<p>You should now see something like the following in your terminal:</p>
+<div class="highlight"><pre><span class="mi">20120124</span><span class="n">T16</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span><span class="mi">10</span> <span class="o">[</span><span class="n">root</span><span class="o">]</span> <span class="n">INFO</span>    <span class="n">Started</span>
+<span class="mi">20120124</span><span class="n">T16</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span><span class="mi">10</span> <span class="o">[</span><span class="n">root</span><span class="o">]</span> <span class="n">DEBUG</span>   <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span> <span class="k">is</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>As you can see, this started Corona and ran our little app which pretty much only does logging at this point. You can now either exit Corona via the UI or hit <code>ctrl+C</code> in the terminal.</p>
+<h3>Let's Do More</h3>
+<p>We can add other packages to our project. Furthermore, those packages can declare dependencies that will pull in other packages. We can install <code>cipr.ui</code>, a collection of UI helpers for Corona:</p>
+<div class="highlight"><pre>cipr install git://github.com/six8/cipr.ui.git
+</pre></div>
+
+
+<p>This will produce a lot more output since it's also installing its dependencies. <code>cipr packages</code> should now look more like this:</p>
+<div class="highlight"><pre><span class="o">-</span> <span class="n">cipr</span><span class="p">.</span><span class="n">ui</span>
+<span class="o">-</span> <span class="n">cipr</span><span class="p">.</span><span class="n">class</span>
+<span class="o">-</span> <span class="n">middleclass</span><span class="o">-</span><span class="n">extras</span>
+<span class="o">-</span> <span class="n">middleclass</span>
+<span class="o">-</span> <span class="n">cipr</span><span class="p">.</span><span class="n">logging</span>
+</pre></div>
+
+
+<p><a href="http://github.com/six8/cipr.class">cipr.class</a> uses <a href="http://github.com/kikito/middleclass">middleclass</a> for classes in lua. <a href="http://github.com/six8/cipr.ui">cipr.ui</a> depends on <code>cipr.class</code> so it and all of its dependencies are installed.</p>
+<p>Let's change <code>build.settings</code> so our app is in landscape mode:</p>
+<div class="highlight"><pre><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">orientation</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">landscapeLeft&quot;</span><span class="p">,</span>
+        <span class="n">supported</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;</span><span class="s">landscapeLeft&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">landscapeRight&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="n">iphone</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">plist</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">CFBundleIconFile</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">Icon.png&quot;</span><span class="p">,</span>
+            <span class="n">CFBundleIconFiles</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;</span><span class="s">Icon.png&quot;</span> <span class="p">,</span>
+                <span class="s2">&quot;</span><span class="s">Icon@2x.png&quot;</span> <span class="p">,</span>
+                <span class="s2">&quot;</span><span class="s">Icon-72.png&quot;</span> <span class="p">,</span>
+                <span class="s2">&quot;</span><span class="s">Icon-Small.png&quot;</span> <span class="p">,</span>
+                <span class="s2">&quot;</span><span class="s">Icon-Small@2x.png&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;</span><span class="s">Icon-Small-50.png&quot;</span>
+            <span class="p">},</span>
+            <span class="c1">-- When set to TRUE turns off the gloss,</span>
+            <span class="c1">-- but leaves the rounded edges.</span>
+            <span class="n">UIPrerenderedIcon</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="n">UIStatusBarHidden</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="n">UIInterfaceOrientation</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">UIInterfaceOrientationLandscapeLeft&quot;</span><span class="p">,</span>
+
+            <span class="n">UISupportedInterfaceOrientations</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;</span><span class="s">UIInterfaceOrientationLandscapeLeft&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;</span><span class="s">UIInterfaceOrientationLandscapeRight&quot;</span>
+            <span class="p">},</span>                        
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Now let's modify <code>main.lua</code> so we can test out <code>cipr.ui</code>'s <code>DebugBar</code>:</p>
+<div class="highlight"><pre><span class="kd">local</span> <span class="n">cipr</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;</span><span class="s">cipr&#39;</span>
+<span class="kd">local</span> <span class="n">log</span> <span class="o">=</span> <span class="n">cipr</span><span class="p">.</span><span class="n">import</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">cipr.logging&#39;</span><span class="p">).</span><span class="n">getLogger</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">log</span><span class="p">:</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="c1">-- Use cipr to import the ui package</span>
+<span class="kd">local</span> <span class="n">DebugBar</span> <span class="o">=</span> <span class="n">cipr</span><span class="p">.</span><span class="n">import</span> <span class="s1">&#39;</span><span class="s">cipr.ui.DebugBar&#39;</span>
+
+<span class="n">log</span><span class="p">:</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">Started&#39;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">.</span><span class="n">setDefault</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">background&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">display</span><span class="p">.</span><span class="n">setStatusBar</span><span class="p">(</span> <span class="n">display</span><span class="p">.</span><span class="n">HiddenStatusBar</span> <span class="p">)</span>
+
+<span class="n">DebugBar</span><span class="p">:</span><span class="n">new</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Now <code>cipr run</code> the project to see the results. You should see a mostly gray screen. Slide the arrow at the top right to the left. This will drag out the DebugBar drawer that shows some useful debug info. You can use this to help with your app development. To disable it for production apps you simply remove or disable <code>DebugBar:new()</code>.</p>
+<h2>Exploring Some Existing Packages</h2>
+<p>Since Cipr is in early development, only a few packages exist. <a href="http://github.com/six8/cipr.ui">cipr.ui</a> is one of the most useful of the new packages. Let's take a look at some of it's features. </p>
+<h3>EffectChain</h3>
+<p>Transitions are a powerful feature of Corona. Often you need to run several transitions on a single object before finally destroying it. In this example,
+we'll create a mini-particle engine that will use <a href="http://github.com/six8/cipr.ui/blob/master/cipr/ui/EffectChain.lua">EffectChain</a> to power animations.</p>
+<p>Add this to your <code>main.lua</code> and <code>cipr run</code> it:</p>
+<div class="highlight"><pre><span class="kd">local</span> <span class="n">EffectChain</span> <span class="o">=</span> <span class="n">cipr</span><span class="p">.</span><span class="n">import</span> <span class="s1">&#39;</span><span class="s">cipr.ui.EffectChain&#39;</span>
+<span class="kd">local</span> <span class="n">random</span> <span class="o">=</span> <span class="nb">math.random</span>
+
+<span class="kd">local</span> <span class="n">particleGroup</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newGroup</span><span class="p">()</span>
+
+<span class="c1">-- EffectChains are re-usable</span>
+<span class="kd">local</span> <span class="n">popBubble</span> <span class="o">=</span> <span class="n">EffectChain</span><span class="p">():</span>
+    <span class="n">fadeIn</span><span class="p">{</span><span class="n">time</span><span class="o">=</span><span class="mi">500</span><span class="p">}:</span>
+    <span class="n">transition</span><span class="p">{</span><span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">transition</span><span class="o">=</span><span class="n">easing</span><span class="p">.</span><span class="n">inExpo</span><span class="p">}:</span>
+    <span class="n">scale</span><span class="p">{</span><span class="n">scale</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">time</span><span class="o">=</span><span class="mi">200</span><span class="p">}:</span>
+    <span class="n">call</span><span class="p">(</span><span class="n">display</span><span class="p">.</span><span class="n">remove</span><span class="p">)</span>
+
+<span class="cm">--[[</span>
+<span class="cm">Create a randomly sized particle and make it float and pop</span>
+<span class="cm">]]</span><span class="c1">--</span>
+<span class="kd">local</span> <span class="k">function</span> <span class="nf">addNewParticle</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">display</span><span class="p">.</span><span class="n">contentWidth</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">display</span><span class="p">.</span><span class="n">contentHeight</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">particle</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newCircle</span><span class="p">(</span><span class="n">particleGroup</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+    <span class="n">particle</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+    <span class="c1">-- Clone the EffectChain for this particle and play it</span>
+    <span class="n">popBubble</span><span class="p">:</span><span class="n">on</span><span class="p">(</span><span class="n">particle</span><span class="p">):</span><span class="n">play</span><span class="p">()</span>
+<span class="k">end</span>
+
+<span class="n">timer</span><span class="p">.</span><span class="n">performWithDelay</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">addNewParticle</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>You should now see what looks like a bubbly drink. Don't forget to try out the DebugBar to see how it performs.</p>
+<h3>ParallaxView</h3>
+<p>Almost every 2D game has a Parallax background. <a href="http://github.com/six8/cipr.ui/blob/master/cipr/ui/widgets/ParallaxView.lua">ParallaxView</a> makes it easy to create these types of backgrounds.</p>
+<p>Add this to your <code>main.lua</code> and <code>cipr run</code> it:</p>
+<div class="highlight"><pre><span class="kd">local</span> <span class="n">ParallaxView</span> <span class="o">=</span> <span class="n">cipr</span><span class="p">.</span><span class="n">import</span> <span class="s1">&#39;</span><span class="s">cipr.ui.widgets.ParallaxView&#39;</span>
+
+<span class="kd">local</span> <span class="n">view</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newGroup</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">background</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newGroup</span><span class="p">()</span>
+<span class="n">view</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span><span class="n">background</span><span class="p">)</span>
+<span class="c1">-- Put our particle group from earlier on top</span>
+<span class="n">view</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span><span class="n">particleGroup</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">pview</span> <span class="o">=</span> <span class="n">ParallaxView</span><span class="p">(</span><span class="n">display</span><span class="p">.</span><span class="n">contentWidth</span><span class="p">,</span> <span class="n">display</span><span class="p">.</span><span class="n">contentHeight</span><span class="p">)</span>
+<span class="n">background</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span><span class="n">pview</span><span class="p">)</span>
+<span class="n">background</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">contentHeight</span>
+
+<span class="c1">-- This layer moves at 1/4 the speed</span>
+<span class="kd">local</span> <span class="n">layer1</span> <span class="o">=</span> <span class="n">pview</span><span class="p">:</span><span class="n">newLayer</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">bgA</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">220</span><span class="p">)</span>
+<span class="n">bgA</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">bgB</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">280</span><span class="p">)</span>
+<span class="n">bgB</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">140</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">140</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">bgC</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">bgC</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">160</span><span class="p">)</span>
+
+<span class="n">layer1</span><span class="p">:</span><span class="n">addCol</span><span class="p">(</span><span class="n">bgA</span><span class="p">)</span>
+<span class="n">layer1</span><span class="p">:</span><span class="n">addCol</span><span class="p">(</span><span class="n">bgB</span><span class="p">)</span>
+<span class="n">layer1</span><span class="p">:</span><span class="n">addCol</span><span class="p">(</span><span class="n">bgC</span><span class="p">)</span>
+
+<span class="c1">-- This layer moves at half the speed</span>
+<span class="kd">local</span> <span class="n">layer2</span> <span class="o">=</span> <span class="n">pview</span><span class="p">:</span><span class="n">newLayer</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1">-- A layer must have at least 2 columns. The width of all </span>
+<span class="c1">-- the cols combined must be at least the width of the view</span>
+<span class="c1">-- in order to loop properly</span>
+<span class="kd">local</span> <span class="n">bg1</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">bg1</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">bg2</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+<span class="n">bg2</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">bg3</span> <span class="o">=</span> <span class="n">display</span><span class="p">.</span><span class="n">newRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">bg3</span><span class="p">:</span><span class="n">setFillColor</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+
+<span class="n">layer2</span><span class="p">:</span><span class="n">addCol</span><span class="p">(</span><span class="n">bg1</span><span class="p">)</span>
+<span class="n">layer2</span><span class="p">:</span><span class="n">addCol</span><span class="p">(</span><span class="n">bg2</span><span class="p">)</span>
+<span class="n">layer2</span><span class="p">:</span><span class="n">addCol</span><span class="p">(</span><span class="n">bg3</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kd">local</span> <span class="k">function</span> <span class="nf">enterFrame</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">10</span>
+    <span class="n">pview</span><span class="p">:</span><span class="n">scrollTo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>    
+<span class="k">end</span>
+
+<span class="n">Runtime</span><span class="p">:</span><span class="n">addEventListener</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">enterFrame&#39;</span><span class="p">,</span> <span class="n">enterFrame</span><span class="p">)</span>
+</pre></div>
+
+
+<p>You should see a couple layers of backgrounds scrolling by at different rates.</p>
+<p>Explore <a href="http://github.com/six8/cipr.ui">cipr.ui</a> for many other useful utilities. </p>
+<h2>Building</h2>
+<p>To run your app for the Xcode simulator or submit it to the App store, you'll need to build it.</p>
+<p>To build:</p>
+<div class="highlight"><pre>cipr build
+</pre></div>
+
+
+<p>This will package up all the files for your project under your project's <code>build</code> directory. Unfortunately, Corona doesn't support command line parameters so you'll have to build it from the Corona UI. Select your project's <code>dist/Payload</code> directory as the place to output the built app. Once your project is built, you can easily package it as an IPA:</p>
+<div class="highlight"><pre><span class="n">cipr</span> <span class="n">packageipa</span>
+</pre></div>
+
+
+<h2>What's Next?</h2>
+<p>Cipr is currently in development. It's being used as the basis for several games actively in development. It has a ways to go before it's production ready so use at your own risk. Any contributions to get Cipr further along will be greatly appreciated. Take a look at <a href="http://github.com/six8/corona-cipr">Cipr</a> and <a href="http://github.com/six8/cipr.ui">cipr.ui</a> and see if it will ease your development with Corona.</p>
+<h3>Source Control</h3>
+<p>One last note. All projects should of course be using source control. Cipr needs <code>.ciprcfg</code> which it creates at the root of your project. This file should be added to your source control. Cipr also creates a <code>.cipr</code> directory in your project. This is where it maintains installed packages. This directory should generally be excluded from source control as it may have many large packages. You should also exclude the <code>build</code> and <code>dist</code> directories.</p>
+<p>Since <code>.cipr</code> isn't generally checked in, this poses a problem if you are sharing code with others. To install a project's required packages, run the following in the project's directory:</p>
+<div class="highlight"><pre>cipr install
+</pre></div>
+
+    <footer>
+    <a href="http://devdetails.com">&larr; Further Reading</a>
+    </footer>
+  </article>
+  </section>
+
+  <div class="footer">
+  <div class="footer-inner">
+    <div class="copyright">
+      &copy; 2013 Dev Details
+    </div>
+    <ul class="nav">
+      <li><a href="http://devdetails.com">Home</a></li>
+      <li><a href="http://devdetails.com/archives/">More To Read</a></li>
+      <li><a href="http://devdetails.com/about/">About</a></li>
+    </li>
+  </div>
+</div>  </body>
+</html>

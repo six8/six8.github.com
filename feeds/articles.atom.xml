@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Dev Details</title><link href="http://devdetails.com/" rel="alternate"></link><link href="http://devdetails.com/feeds/articles.atom.xml" rel="self"></link><id>http://devdetails.com/</id><updated>2012-01-24T00:00:00-06:00</updated><entry><title>Getting Started with Cipr</title><link href="http://devdetails.com/2012/01/24/getting-started-with-cipr/" rel="alternate"></link><updated>2012-01-24T00:00:00-06:00</updated><author><name>Mike Thornton</name></author><id>tag:devdetails.com,2012-01-24:2012/01/24/getting-started-with-cipr/</id><summary type="html">&lt;h2&gt;Now Just WTF is Cipr?&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://github.com/six8/corona-cipr"&gt;Cipr&lt;/a&gt; (pronounced "sipper") is part package manager, part development framework for &lt;a href="http://www.anscamobile.com/corona/"&gt;Corona SDK&lt;/a&gt;. Much like Python's &lt;a href="http://pypi.python.org/pypi/pip"&gt;pip&lt;/a&gt;, Cipr makes it easier to share packages and integrate them into Corona apps. The Goal for Cipr is that there's a generous amount of third-party, best-of-breed packages available for use in Corona apps. This will help new developers get started developing apps sooner and reduce the re-inventing of the wheel for every app.&lt;/p&gt;
+&lt;h2&gt;Installing Cipr&lt;/h2&gt;
+&lt;p&gt;Cipr is developed with &lt;a href="http://python.org/"&gt;Python&lt;/a&gt; and currently only supports Mac OSX. Installing is simple on Macs because it comes with Python installed. If you're familiar with Python you can install Cipr with &lt;a href="http://pypi.python.org/pypi/pip"&gt;pip&lt;/a&gt; or &lt;a href="http://pypi.python.org/pypi/setuptools"&gt;easy_install&lt;/a&gt; either globally or, as preferred, in a &lt;a href="http://pypi.python.org/pypi/virtualenv"&gt;virtualenv&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;For those new to Python, don't worry, you don't need to know it. You can simply install Cipr with this command on the terminal:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo easy_install cipr
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This installs the &lt;code&gt;cipr&lt;/code&gt; command line utility. All your interaction with Cipr is through this command. You can get a list of available commands with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr -h
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Your First Project&lt;/h2&gt;
+&lt;p&gt;Cipr considers each app a Project. Cipr can be used on an existing project, but for this tutorial let's create an empty project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir /tmp/hellocipr
+&lt;span class="nb"&gt;cd&lt;/span&gt; /tmp/hellocipr
+cipr init
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;cipr init&lt;/code&gt; initializes the current directory as a Cipr project. It will copy in the default Cipr skeleton files which includes a basic &lt;code&gt;build.settings&lt;/code&gt;, &lt;code&gt;config.lua&lt;/code&gt;, and &lt;code&gt;main.lua&lt;/code&gt;. These are some of the files every Corona project has. &lt;code&gt;cipr init&lt;/code&gt; also adds &lt;code&gt;cipr.lua&lt;/code&gt;. This is the basic development package loader for Cipr. It should not be modified as Cipr will overwrite it with the production version during build.&lt;/p&gt;
+&lt;p&gt;This project will run at this point, but won't do anything useful. Cipr isn't entirely useful on it's own, so lets install a package:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr install git://github.com/six8/cipr.logging.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you can see, most Cipr packages are git repositories starting with &lt;code&gt;git://&lt;/code&gt;. You can install packages from a directory as well, but this is generally only needed for package developers.&lt;/p&gt;
+&lt;p&gt;See what packages are now installed:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr packages -l
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should see something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;
+  &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hellocipr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;
+  &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/six8/cipr.logging.git&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now lets try out our new package. Open up &lt;code&gt;main.lua&lt;/code&gt; in your favorite editor and make it look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;-- Initialize cipr&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;-- Use cipr to import the logging package&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;logging&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr.logging&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;-- Create a logger for this file (... is automatically replaced with this file name)&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DEBUG&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;Started&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;the value of `x` is %s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we're ready to run this with Corona:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr run
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should now see something like the following in your terminal:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;20120124&lt;/span&gt;&lt;span class="n"&gt;T16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;46&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="n"&gt;INFO&lt;/span&gt;    &lt;span class="n"&gt;Started&lt;/span&gt;
+&lt;span class="mi"&gt;20120124&lt;/span&gt;&lt;span class="n"&gt;T16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;46&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="n"&gt;DEBUG&lt;/span&gt;   &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you can see, this started Corona and ran our little app which pretty much only does logging at this point. You can now either exit Corona via the UI or hit &lt;code&gt;ctrl+C&lt;/code&gt; in the terminal.&lt;/p&gt;
+&lt;h3&gt;Let's Do More&lt;/h3&gt;
+&lt;p&gt;We can add other packages to our project. Furthermore, those packages can declare dependencies that will pull in other packages. We can install &lt;code&gt;cipr.ui&lt;/code&gt;, a collection of UI helpers for Corona:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr install git://github.com/six8/cipr.ui.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will produce a lot more output since it's also installing its dependencies. &lt;code&gt;cipr packages&lt;/code&gt; should now look more like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ui&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;class&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;middleclass&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;extras&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;middleclass&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logging&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;a href="http://github.com/six8/cipr.class"&gt;cipr.class&lt;/a&gt; uses &lt;a href="http://github.com/kikito/middleclass"&gt;middleclass&lt;/a&gt; for classes in lua. &lt;a href="http://github.com/six8/cipr.ui"&gt;cipr.ui&lt;/a&gt; depends on &lt;code&gt;cipr.class&lt;/code&gt; so it and all of its dependencies are installed.&lt;/p&gt;
+&lt;p&gt;Let's change &lt;code&gt;build.settings&lt;/code&gt; so our app is in landscape mode:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;orientation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;landscapeLeft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;supported&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;landscapeLeft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;landscapeRight&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="n"&gt;iphone&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;plist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;CFBundleIconFile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon.png&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;CFBundleIconFiles&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon.png&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon@2x.png&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon-72.png&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon-Small.png&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon-Small@2x.png&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;Icon-Small-50.png&amp;quot;&lt;/span&gt;
+            &lt;span class="p"&gt;},&lt;/span&gt;
+            &lt;span class="c1"&gt;-- When set to TRUE turns off the gloss,&lt;/span&gt;
+            &lt;span class="c1"&gt;-- but leaves the rounded edges.&lt;/span&gt;
+            &lt;span class="n"&gt;UIPrerenderedIcon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;UIStatusBarHidden&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;UIInterfaceOrientation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;UIInterfaceOrientationLandscapeLeft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+
+            &lt;span class="n"&gt;UISupportedInterfaceOrientations&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;UIInterfaceOrientationLandscapeLeft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;UIInterfaceOrientationLandscapeRight&amp;quot;&lt;/span&gt;
+            &lt;span class="p"&gt;},&lt;/span&gt;                        
+        &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now let's modify &lt;code&gt;main.lua&lt;/code&gt; so we can test out &lt;code&gt;cipr.ui&lt;/code&gt;'s &lt;code&gt;DebugBar&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr&amp;#39;&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr.logging&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DEBUG&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;-- Use cipr to import the ui package&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;DebugBar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr.ui.DebugBar&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;Started&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setDefault&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;background&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setStatusBar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HiddenStatusBar&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;DebugBar&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now &lt;code&gt;cipr run&lt;/code&gt; the project to see the results. You should see a mostly gray screen. Slide the arrow at the top right to the left. This will drag out the DebugBar drawer that shows some useful debug info. You can use this to help with your app development. To disable it for production apps you simply remove or disable &lt;code&gt;DebugBar:new()&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Exploring Some Existing Packages&lt;/h2&gt;
+&lt;p&gt;Since Cipr is in early development, only a few packages exist. &lt;a href="http://github.com/six8/cipr.ui"&gt;cipr.ui&lt;/a&gt; is one of the most useful of the new packages. Let's take a look at some of it's features. &lt;/p&gt;
+&lt;h3&gt;EffectChain&lt;/h3&gt;
+&lt;p&gt;Transitions are a powerful feature of Corona. Often you need to run several transitions on a single object before finally destroying it. In this example,
+we'll create a mini-particle engine that will use &lt;a href="http://github.com/six8/cipr.ui/blob/master/cipr/ui/EffectChain.lua"&gt;EffectChain&lt;/a&gt; to power animations.&lt;/p&gt;
+&lt;p&gt;Add this to your &lt;code&gt;main.lua&lt;/code&gt; and &lt;code&gt;cipr run&lt;/code&gt; it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;EffectChain&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr.ui.EffectChain&amp;#39;&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;math.random&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;particleGroup&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newGroup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- EffectChains are re-usable&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;popBubble&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;EffectChain&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;fadeIn&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;}:&lt;/span&gt;
+    &lt;span class="n"&gt;transition&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;transition&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;easing&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inExpo&lt;/span&gt;&lt;span class="p"&gt;}:&lt;/span&gt;
+    &lt;span class="n"&gt;scale&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;scale&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;}:&lt;/span&gt;
+    &lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;remove&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="cm"&gt;--[[&lt;/span&gt;
+&lt;span class="cm"&gt;Create a randomly sized particle and make it float and pop&lt;/span&gt;
+&lt;span class="cm"&gt;]]&lt;/span&gt;&lt;span class="c1"&gt;--&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;addNewParticle&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;contentWidth&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;contentHeight&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;particle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newCircle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;particleGroup&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;particle&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;-- Clone the EffectChain for this particle and play it&lt;/span&gt;
+    &lt;span class="n"&gt;popBubble&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;particle&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;&lt;span class="n"&gt;play&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;timer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;performWithDelay&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;addNewParticle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should now see what looks like a bubbly drink. Don't forget to try out the DebugBar to see how it performs.&lt;/p&gt;
+&lt;h3&gt;ParallaxView&lt;/h3&gt;
+&lt;p&gt;Almost every 2D game has a Parallax background. &lt;a href="http://github.com/six8/cipr.ui/blob/master/cipr/ui/widgets/ParallaxView.lua"&gt;ParallaxView&lt;/a&gt; makes it easy to create these types of backgrounds.&lt;/p&gt;
+&lt;p&gt;Add this to your &lt;code&gt;main.lua&lt;/code&gt; and &lt;code&gt;cipr run&lt;/code&gt; it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;ParallaxView&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cipr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;cipr.ui.widgets.ParallaxView&amp;#39;&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newGroup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;background&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newGroup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;background&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;-- Put our particle group from earlier on top&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;particleGroup&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;pview&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ParallaxView&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;contentWidth&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;contentHeight&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;background&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pview&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;background&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;contentHeight&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- This layer moves at 1/4 the speed&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;layer1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pview&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;newLayer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.25&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;bgA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;220&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bgA&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;bgB&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;280&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bgB&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;140&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;140&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;140&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;bgC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bgC&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;160&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;160&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;160&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;layer1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addCol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bgA&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;layer1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addCol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bgB&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;layer1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addCol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bgC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- This layer moves at half the speed&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;layer2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pview&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;newLayer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;-- A layer must have at least 2 columns. The width of all &lt;/span&gt;
+&lt;span class="c1"&gt;-- the cols combined must be at least the width of the view&lt;/span&gt;
+&lt;span class="c1"&gt;-- in order to loop properly&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;bg1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bg1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;bg2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bg2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;bg3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bg3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;setFillColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;75&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;75&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;75&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;layer2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addCol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bg1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;layer2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addCol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bg2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;layer2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addCol&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bg3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="kd"&gt;local&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;enterFrame&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
+    &lt;span class="n"&gt;pview&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;scrollTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;Runtime&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;enterFrame&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;enterFrame&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should see a couple layers of backgrounds scrolling by at different rates.&lt;/p&gt;
+&lt;p&gt;Explore &lt;a href="http://github.com/six8/cipr.ui"&gt;cipr.ui&lt;/a&gt; for many other useful utilities. &lt;/p&gt;
+&lt;h2&gt;Building&lt;/h2&gt;
+&lt;p&gt;To run your app for the Xcode simulator or submit it to the App store, you'll need to build it.&lt;/p&gt;
+&lt;p&gt;To build:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr build
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will package up all the files for your project under your project's &lt;code&gt;build&lt;/code&gt; directory. Unfortunately, Corona doesn't support command line parameters so you'll have to build it from the Corona UI. Select your project's &lt;code&gt;dist/Payload&lt;/code&gt; directory as the place to output the built app. Once your project is built, you can easily package it as an IPA:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cipr&lt;/span&gt; &lt;span class="n"&gt;packageipa&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;What's Next?&lt;/h2&gt;
+&lt;p&gt;Cipr is currently in development. It's being used as the basis for several games actively in development. It has a ways to go before it's production ready so use at your own risk. Any contributions to get Cipr further along will be greatly appreciated. Take a look at &lt;a href="http://github.com/six8/corona-cipr"&gt;Cipr&lt;/a&gt; and &lt;a href="http://github.com/six8/cipr.ui"&gt;cipr.ui&lt;/a&gt; and see if it will ease your development with Corona.&lt;/p&gt;
+&lt;h3&gt;Source Control&lt;/h3&gt;
+&lt;p&gt;One last note. All projects should of course be using source control. Cipr needs &lt;code&gt;.ciprcfg&lt;/code&gt; which it creates at the root of your project. This file should be added to your source control. Cipr also creates a &lt;code&gt;.cipr&lt;/code&gt; directory in your project. This is where it maintains installed packages. This directory should generally be excluded from source control as it may have many large packages. You should also exclude the &lt;code&gt;build&lt;/code&gt; and &lt;code&gt;dist&lt;/code&gt; directories.&lt;/p&gt;
+&lt;p&gt;Since &lt;code&gt;.cipr&lt;/code&gt; isn't generally checked in, this poses a problem if you are sharing code with others. To install a project's required packages, run the following in the project's directory:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cipr install
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="corona-sdk"></category></entry><entry><title>Clom: Python command line the easy way</title><link href="http://devdetails.com/2011/11/07/clom-python-command-line-the-easy-way/" rel="alternate"></link><updated>2011-11-07T00:00:00-06:00</updated><author><name>Mike Thornton</name></author><id>tag:devdetails.com,2011-11-07:2011/11/07/clom-python-command-line-the-easy-way/</id><summary type="html">&lt;h2&gt;Now Just WTF is Clom?&lt;/h2&gt;
+&lt;p&gt;Clom is a Python Command Line Object Mapper. I wrote &lt;a href="http://github.com/six8/python-clom"&gt;Clom&lt;/a&gt; in order to reduce the amount of repetitive coding needed to write apps that routinely deal with the command line. &lt;a href="http://fabfile.org/"&gt;Fabric&lt;/a&gt; scripts in particular involve string manipulation to write commands which can lead to error prone, unescaped, and unsafe commands. Instead of working directly with strings and having to worry about escaping arguments yourself (or completely forgetting to), Clom allows you to work with an object interface to write commands more safely. Just as SQL ORMs allow you to write re-usable and safer SQL, Clom allows you to write re-usable and safer command line code.&lt;/p&gt;
+&lt;h2&gt;Using Clom to Manage VirtualBox&lt;/h2&gt;
+&lt;p&gt;To introduce you to Clom and how it's useful, let's take a look at how we could use Clom to manage some &lt;a href="http://www.virtualbox.org/"&gt;VirtualBoxes&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;clom&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runningvms&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage list runningvms&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Working with Clom starts with the clom object. Commands are accessed by attribute or item lookup. Each command can have sub-commands also accessed by attribute or item lookup. Calling a command doesn't execute it. A command can be stringified in order to be passed to a &lt;a href="http://docs.python.org/library/subprocess.html"&gt;subprocess&lt;/a&gt; function, Popen, or even &lt;a href="http://fabfile.org/"&gt;Fabric&lt;/a&gt;. Clom also offers a shortcut for easily executing commands in a shell.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runningvms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="n"&gt;runningvms&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;CommandResult&lt;/span&gt; &lt;span class="n"&gt;return_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nb"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nb"&gt;bytes&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Shelling Out Commands&lt;/h3&gt;
+&lt;p&gt;The Clom &lt;a href="http://clom.readthedocs.org/en/latest/api.html#shell"&gt;shell interface&lt;/a&gt; offers many convenient ways to access the return result of a shell command.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="n"&gt;vms&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;quot;Windows Base&amp;quot; {949ec0af-92d0-4140-8a6c-36301ca6f695}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;quot;Dev_1320289635&amp;quot; {0a4df13c-e9f8-42c1-b09b-1f4619cca34d}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="n"&gt;vms&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;&amp;quot;Windows Base&amp;quot; {949ec0af-92d0-4140-8a6c-36301ca6f695}&amp;#39;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="n"&gt;vms&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;&amp;quot;Dev_1320289635&amp;quot; {0a4df13c-e9f8-42c1-b09b-1f4619cca34d}&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can also iterate over the lines of the command's results.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt; 
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="n"&gt;vms&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;Windows Base&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;949&lt;/span&gt;&lt;span class="n"&gt;ec0af&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;92&lt;/span&gt;&lt;span class="n"&gt;d0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;4140&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="n"&gt;a6c&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;36301&lt;/span&gt;&lt;span class="n"&gt;ca6f695&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;Dev_1320289635&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a4df13c&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;e9f8&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="n"&gt;c1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;b09b&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;f4619cca34d&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Shell execution returns &lt;a href="http://clom.readthedocs.org/en/latest/api.html#clom.shell.CommandResult"&gt;CommandResult&lt;/a&gt; which allows access to stdout, stderr, and the return code of the command.&lt;/p&gt;
+&lt;h3&gt;Augment with Arguments&lt;/h3&gt;
+&lt;p&gt;Commands aren't very interesting without arguments, so let's add some.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;showvminfo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Windows Base&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;machinereadable&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;details&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;()[:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="n"&gt;showvminfo&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;machinereadable&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;details&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Windows Base&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name=&amp;quot;Windows Base&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ostype=&amp;quot;WindowsXP&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;UUID=&amp;quot;949ec0af-92d0-4140-8a6c-36301ca6f695&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;CfgFile=&amp;quot;VirtualBox/Machines/Windows Base/Windows Base.xml&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;SnapFldr=&amp;quot;VirtualBox/Machines/Windows Base/Snapshots&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There's several ways to add arguments and options. When arguments or option values are used, they're properly escaped if needed.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createvm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;register&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ostype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Linux&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="n"&gt;createvm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;ostype&lt;/span&gt; &lt;span class="n"&gt;Linux&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;register&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Virtual machine &amp;#39;Test VM&amp;#39; is created and registered.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;UUID: e7b73b54-7a94-4aaa-9f5f-335140a1703a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Settings file: &amp;#39;VirtualBox VMs/Test VM/Test VM.vbox&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Options can be specified by calling a command with keyword arguments as above or by using &lt;code&gt;with_opts()&lt;/code&gt;. Options and arguments have a catch however. Options are always listed before arguments. VBoxManage expects the VM's name as the first argument, followed by options. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;modifyvm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_opts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;--vrde&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;on&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;on&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage modifyvm --vrde on --usb on --memory 256 &amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Test&lt;/span&gt; &lt;span class="n"&gt;VM&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Unfortunately, as expected, the code above puts the VM name after the options. We can get around this by passing the VM name as the first option. &lt;code&gt;with_opts()&lt;/code&gt; honors positional options followed by unspecified order keyword options.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;modifyvm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_opts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--vrde&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;on&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;on&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage modifyvm &amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Test&lt;/span&gt; &lt;span class="n"&gt;VM&lt;/span&gt;&lt;span class="s"&gt;&amp;#39; --vrde on --usb on --memory 256&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Arguments are straight forward. They're just added to the end of the command in the order you provide.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;registervm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_args&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/path/to/vm&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage registervm /path/to/vm&amp;#39;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setproperty&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_args&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;machinefolder&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;default&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage setproperty machinefolder default&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Calling a command is simply an alias to &lt;code&gt;with_opts(**kwargs).with_args(*args)&lt;/code&gt;. The above could also be written as a function call.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;registervm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/path/to/vm&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage registervm /path/to/vm&amp;#39;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setproperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;machinefolder&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;default&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage setproperty machinefolder default&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Reusing Clom Objects&lt;/h3&gt;
+&lt;p&gt;Part of the power of Clom is that each command object is re-usable. This allows you to chain and combine commands or use them many times for batch commands.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;vbox&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;vbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runningvms&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage list runningvms&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Sub-commands can be re-used as well.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runningvms&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage list runningvms&amp;#39;&lt;/span&gt;    
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vms&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage list vms&amp;#39;&lt;/span&gt;   
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dvds&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage list dvds&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can set default options and arguments.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;create_linux&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createvm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_opts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ostype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Linux&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;create_linux&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My Box&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage createvm --ostype Linux --name &amp;#39;&lt;/span&gt;&lt;span class="n"&gt;My&lt;/span&gt; &lt;span class="n"&gt;Box&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;create_linux&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Their Box&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;VBoxManage createvm --ostype Linux --name &amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Their&lt;/span&gt; &lt;span class="n"&gt;Box&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Background Noise&lt;/h3&gt;
+&lt;p&gt;Some commands need to be forked and ran in the background.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxHeadless&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_opts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;startvm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;background&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;capture&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;nohup&lt;/span&gt; &lt;span class="n"&gt;VBoxHeadless&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;startvm&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;CommandResult&lt;/span&gt; &lt;span class="n"&gt;return_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nb"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nb"&gt;bytes&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;vbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;controlvm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_opts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_args&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;poweroff&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Executing&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="n"&gt;controlvm&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Test VM&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;poweroff&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Shortcuts&lt;/h3&gt;
+&lt;p&gt;Clom has shortcuts for most POSIX operations including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;with_env&lt;/code&gt; - Run the operation with environmental variables&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hide_output&lt;/code&gt; - Redirect a command's file descriptors to /dev/null&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;output_to_file&lt;/code&gt; - Replace a file's contents with this command's output&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;append_to_file&lt;/code&gt; - Append this command's output to a file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pipe_to&lt;/code&gt; - Pipe this command to another&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See the &lt;a href="http://clom.readthedocs.org/en/latest/api.html"&gt;API docs&lt;/a&gt; for details.&lt;/p&gt;
+&lt;h3&gt;Fabric&lt;/h3&gt;
+&lt;p&gt;Clom's original inspiration came from doing lots of automation with &lt;a href="http://fabfile.org/"&gt;Fabric&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;vbox&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VBoxManage&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vms&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VBoxManage&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="n"&gt;vms&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This of course means you can use Clom with Fabric tasks, including remote ones.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;vmstart&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startvm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Clom even understands how to create Fabric commands.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vmstart&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dev&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;fab vmstart:dev&amp;#39;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;clom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vmstart&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dev&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vmstartservice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dev&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;flask&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;fab vmstart:dev vmstartservice:dev,nginx,flask&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;That's It&lt;/h2&gt;
+&lt;p&gt;I hope you've found this introduction to Clom useful. Check out &lt;a href="http://clom.readthedocs.org/en/latest/index.html"&gt;Clom's Documentation&lt;/a&gt; for other ways to use Clom and fork &lt;a href="http://github.com/six8/python-clom"&gt;Clom on Github&lt;/a&gt;.&lt;/p&gt;</summary><category term="python"></category><category term="clom"></category></entry><entry><title>Fix for gray overlay on touch with iOS and Sencha Touch</title><link href="http://devdetails.com/2011/10/01/fix-for-gray-overlay-on-touch-with-ios-and-sencha-touch/" rel="alternate"></link><updated>2011-10-01T00:00:00-05:00</updated><author><name>Mike Thornton</name></author><id>tag:devdetails.com,2011-10-01:2011/10/01/fix-for-gray-overlay-on-touch-with-ios-and-sencha-touch/</id><summary type="html">&lt;p&gt;I've been working on a Javascript based app for the iPhone. I was originally using &lt;a href="http://www.phonegap.com/"&gt;Phonegap&lt;/a&gt; which basically renders an HTML5/Javascript app in a UIWebView. I was running in to an issue where when you click on about a 20 point area on any edge of the screen, a gray overlay would appear. Most answers to this problem suggest &lt;a href="http://stackoverflow.com/search?q=webkit-tap-highlight-color"&gt;using a transparent &lt;code&gt;-webkit-tap-highlight-color&lt;/code&gt;&lt;/a&gt; or setting &lt;code&gt;-webkit-user-select: none&lt;/code&gt;. I'm using &lt;a href="http://www.sencha.com/products/touch/"&gt;Sencha Touch&lt;/a&gt; which already does this to all elements by default. In order to isolate the issue, I spent hours narrowing down all the CSS, HTML, and Javascript to the bare minimum I could manage to reproduce it. &lt;/p&gt;
+&lt;p&gt;I created a basic Phonegap app with &lt;a href="http://gist.github.com/1233975"&gt;this gist&lt;/a&gt;. Note that the issue only shows up if you have the status bar hidden (in this case with &lt;code&gt;UIStatusBarHidden&lt;/code&gt; set to &lt;code&gt;YES&lt;/code&gt;). Below is a screenshot of what it looks like. On the left is the regular view. On the right is what it looks like when you touch the edge of the screen. The effect is subtle, but enough to be annoying if your app requires clicking on the edge of the screen a lot. It ends up looking like the screen is flickering.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Side by side image of iPhone" src="http://devdetails.com/static/images/2011/09/iphone-screen-overlay.jpg" title="Strange overlay on touch" /&gt;&lt;/p&gt;
+&lt;p&gt;Once I was able to distill the issue down to &lt;a href="http://gist.github.com/1233975"&gt;the basic code&lt;/a&gt; it was much easier to track down. Apparently the issue only appears when you add any one of the mouse events &amp;ndash; &lt;code&gt;mouseup&lt;/code&gt;, &lt;code&gt;mousedown&lt;/code&gt;, &lt;code&gt;mousemove&lt;/code&gt;, or &lt;code&gt;click&lt;/code&gt; &amp;ndash; to the document.&lt;/p&gt;
+&lt;p&gt;This bit is the main offender:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){},&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Oddly enough this doesn't happen with any of the touch events &amp;ndash; &lt;code&gt;touchup&lt;/code&gt;, &lt;code&gt;touchdown&lt;/code&gt;, or &lt;code&gt;touchmove&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;After digging around in Sencha code for a while (which seems to be the only way to understand Sencha Touch) I figured out that this is the offending code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;Ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;gesture&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Manager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;AbstractManager&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// ...&lt;/span&gt;
+
+    &lt;span class="nx"&gt;defaultPreventedMouseEvents&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// ...&lt;/span&gt;
+
+    &lt;span class="nx"&gt;attachListeners&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;Ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;iterate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;eventNames&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;listenerWrappers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;supports&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Touch&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="c1"&gt;// Right here the click event gets attached on a touch device.&lt;/span&gt;
+            &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;defaultPreventedMouseEvents&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;listenerWrappers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mouse&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// ...&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;click&lt;/code&gt; event ends up being attached to &lt;code&gt;document&lt;/code&gt; when it's a touch device. I'm not sure what case prompted Sencha to do this, but I can't see any reason for it being here especially since it's the cause of this issue.&lt;/p&gt;
+&lt;p&gt;So the fix is simple. Instead of modifying Sencha's code, I just put this at the top of my Javascript after loading Sencha's Javascript:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// Prevent sencha from attaching to the &amp;#39;click&amp;#39; event which&lt;/span&gt;
+&lt;span class="c1"&gt;// will make a gray overlay appear when you touch the each of the screen.&lt;/span&gt;
+&lt;span class="nx"&gt;Ext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;gesture&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Manager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;defaultPreventedMouseEvents&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that these issues were reproduced with Sencha Touch 1.1.0 and iOS 4.3 but may not be limited to these versions.&lt;/p&gt;
+&lt;p&gt;I tried googling other solutions of course, but could only find other reports such as &lt;a href="http://www.sencha.com/forum/showthread.php?146243-Flicker-when-tapping-edge-of-viewport"&gt;Flicker when tapping edge of viewport&lt;/a&gt;.&lt;/p&gt;</summary><category term="ios"></category></entry><entry><title>Install PIL in a virtualenv on Mac OSX Lion</title><link href="http://devdetails.com/2011/09/20/install-pil-in-a-virtualenv-on-mac-osx-lion/" rel="alternate"></link><updated>2011-09-20T00:00:00-05:00</updated><author><name>Mike Thornton</name></author><id>tag:devdetails.com,2011-09-20:2011/09/20/install-pil-in-a-virtualenv-on-mac-osx-lion/</id><summary type="html">&lt;p&gt;I work on a Mac but prefer to use Linux VMs (especially with &lt;a href="http://vagrantup.com"&gt;Vagrant&lt;/a&gt;) for my development environment. Still, some things are small enough to not warrant a VM. Sometimes you just want to automate a process that's better done on OSX. In this case I wanted to automate some image manipulation with &lt;a href="http://www.pythonware.com/products/pil/"&gt;PIL&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;There's several 'how to's around and &lt;a href="http://stackoverflow.com/search?q=install+pil+mac"&gt;stackoverflow&lt;/a&gt; answers, but they all seem to want you to install extra dependancies or use &lt;a href="http://www.macports.org/"&gt;MacPorts&lt;/a&gt; or &lt;a href="http://mxcl.github.com/homebrew/"&gt;Brew&lt;/a&gt;'s Python. For this case I want to use the Python 2.7 that comes with Lion and install PIL inside a &lt;a href="http://pypi.python.org/pypi/virtualenv"&gt;virtualenv&lt;/a&gt;. I also want to use Brew at least for the things that aren't already installed with Lion.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://timetobefrank.blogspot.com/2011/05/installing-pil-on-mac-osx-with.html"&gt;Installing PIL on mac osx with virtualenv, homebrew and pip&lt;/a&gt; gets you almost there but doesn't include freetype support. So I adapted it a bit. Here's what I ended up with:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Activate your virtual environment (I use &lt;a href="http://pypi.python.org/pypi/virtualenvwrapper"&gt;virtualenvwrapper&lt;/a&gt;):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;workon default
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install jpeg libs with brew:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;brew install jpeg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Download the PIL source with pip, but don't install yet:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install --upgrade --no-install PIL
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit PIL's setup.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi &lt;span class="nv"&gt;$VIRTUAL_ENV&lt;/span&gt;/build/PIL/setup.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Change &lt;code&gt;JPEG_ROOT&lt;/code&gt; and &lt;code&gt;FREETYPE_ROOT&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;JPEG_ROOT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/usr/local/Cellar/jpeg/8c/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;FREETYPE_ROOT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;libinclude&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/usr/X11&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Build:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install --upgrade PIL
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You should now have a complete install of PIL ready to go.&lt;/p&gt;</summary><category term="python"></category></entry></feed>

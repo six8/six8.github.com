@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link href='http://fonts.googleapis.com/css?family=Nunito:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="http://devdetails.com/theme/css/style.css?4d00dfc5">
+  
+    <link href="http://devdetails.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Full Atom Feed" />
+        <link href="http://devdetails.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Atom Feed" />
+      <link href="http://devdetails.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Dev Details RSS Feed" />
+      <link href="http://devdetails.com/feeds/articles.atom.xml" type="application/atom+xml" rel="alternate" title="Dev Details Categories Atom Feed" />
+        
+      <title>Dev Details</title>    
+  </head>
+<body>
+  <div class="logo">
+    <a href="http://devdetails.com"><span class="logo-dev">Dev</span><span class="logo-details">Details</span></a>
+  </div>
+
+  <section class="posts">
+    <article>
+    <h1 class="title">
+      <a href="http://devdetails.com/2011/09/20/install-pil-in-a-virtualenv-on-mac-osx-lion/" rel="bookmark"
+        title="Permalink to Install PIL in a virtualenv on Mac OSX Lion">Install PIL in a virtualenv on Mac OSX Lion</a>
+    </h1>
+
+    <div class="article_meta">
+      <span class="author"><a href="http://devdetails.com/author/mike-thornton/">Mike Thornton</a></span> 
+
+            in
+      
+      
+        <a href="http://devdetails.com/category/articles/">Articles</a>,
+          <a href="http://devdetails.com/tag/python/">python</a>
+      on Sep 20, 2011
+    </div>
+
+    <p>I work on a Mac but prefer to use Linux VMs (especially with <a href="http://vagrantup.com">Vagrant</a>) for my development environment. Still, some things are small enough to not warrant a VM. Sometimes you just want to automate a process that's better done on OSX. In this case I wanted to automate some image manipulation with <a href="http://www.pythonware.com/products/pil/">PIL</a>.</p>
+<p>There's several 'how to's around and <a href="http://stackoverflow.com/search?q=install+pil+mac">stackoverflow</a> answers, but they all seem to want you to install extra dependancies or use <a href="http://www.macports.org/">MacPorts</a> or <a href="http://mxcl.github.com/homebrew/">Brew</a>'s Python. For this case I want to use the Python 2.7 that comes with Lion and install PIL inside a <a href="http://pypi.python.org/pypi/virtualenv">virtualenv</a>. I also want to use Brew at least for the things that aren't already installed with Lion.</p>
+<p><a href="http://timetobefrank.blogspot.com/2011/05/installing-pil-on-mac-osx-with.html">Installing PIL on mac osx with virtualenv, homebrew and pip</a> gets you almost there but doesn't include freetype support. So I adapted it a bit. Here's what I ended up with:</p>
+<ol>
+<li>
+<p>Activate your virtual environment (I use <a href="http://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a>):</p>
+<div class="highlight"><pre>workon default
+</pre></div>
+
+
+</li>
+<li>
+<p>Install jpeg libs with brew:</p>
+<div class="highlight"><pre>brew install jpeg
+</pre></div>
+
+
+</li>
+<li>
+<p>Download the PIL source with pip, but don't install yet:</p>
+<div class="highlight"><pre>pip install --upgrade --no-install PIL
+</pre></div>
+
+
+</li>
+<li>
+<p>Edit PIL's setup.py:</p>
+<div class="highlight"><pre>vi <span class="nv">$VIRTUAL_ENV</span>/build/PIL/setup.py
+</pre></div>
+
+
+</li>
+<li>
+<p>Change <code>JPEG_ROOT</code> and <code>FREETYPE_ROOT</code>:</p>
+<div class="highlight"><pre><span class="n">JPEG_ROOT</span> <span class="o">=</span> <span class="s">&#39;/usr/local/Cellar/jpeg/8c/&#39;</span>
+<span class="n">FREETYPE_ROOT</span> <span class="o">=</span> <span class="n">libinclude</span><span class="p">(</span><span class="s">&#39;/usr/X11&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>Build:</p>
+<div class="highlight"><pre>pip install --upgrade PIL
+</pre></div>
+
+
+</li>
+</ol>
+<p>You should now have a complete install of PIL ready to go.</p>
+
+    <footer>
+    <a href="http://devdetails.com">&larr; Further Reading</a>
+    </footer>
+  </article>
+  </section>
+
+  <div class="footer">
+  <div class="footer-inner">
+    <div class="copyright">
+      &copy; 2013 Dev Details
+    </div>
+    <ul class="nav">
+      <li><a href="http://devdetails.com">Home</a></li>
+      <li><a href="http://devdetails.com/archives/">More To Read</a></li>
+      <li><a href="http://devdetails.com/about/">About</a></li>
+    </li>
+  </div>
+</div>  </body>
+</html>
