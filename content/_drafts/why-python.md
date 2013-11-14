@@ -1,0 +1,1 @@
+Quality: http://www.coverity.com/company/press-releases/read/coverity-finds-python-sets-new-level-of-quality-for-open-source-software
